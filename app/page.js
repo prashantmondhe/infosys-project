@@ -10,17 +10,35 @@ export default function RegisterPage() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-   
-    alert('Registration Successful!');
-    router.push('/login');
+
+    try {
+      const res = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : {};
+
+      if (res.ok) {
+        alert('Registration Successful! Please log in.');
+        router.push('/login');
+      } else {
+        alert(data.message || 'Registration failed');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred during registration.');
+    }
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-md">
-        <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">Create Account</h2>
+        <h2 className="mb-6 text-center text-2xl font-bold text-gray-800">Register</h2>
         
         <form onSubmit={handleRegister} className="space-y-4">
           <div>
@@ -31,7 +49,7 @@ export default function RegisterPage() {
               onChange={(e) => setName(e.target.value)}
               required
               className="mt-1 w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
-              placeholder="Your Name"
+              placeholder="Prashant Mondhe"
             />
           </div>
 
