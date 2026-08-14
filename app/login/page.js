@@ -23,7 +23,6 @@ export default function LoginPage() {
 
       if (res.ok) {
         alert('Login Successful!');
-       
       } else {
         alert('Incorrect email or password! Redirecting to Forgot Password page.');
         router.push('/forgot-password');
@@ -61,6 +60,12 @@ export default function LoginPage() {
               className="mt-1 w-full rounded-md border border-gray-300 p-2 focus:border-blue-500 focus:outline-none"
               placeholder="••••••••"
             />
+          </div>
+
+          <div className="text-right">
+            <Link href="/forgot-password" className="text-sm text-blue-600 hover:underline">
+              Forgot Password?
+            </Link>
           </div>
 
           <button
