@@ -9,19 +9,27 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const router = useRouter();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    const correctEmail = 'admin@gmail.com';
-    const correctPassword = '123456';
+    try {
+      const res = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (email === correctEmail && password === correctPassword) {
-      alert('Login Successful!');
-      
-    } else {
-      
-      alert('Incorrect email or password! Redirecting to Forgot Password page.');
-      router.push('/forgot-password');
+      const data = await res.json();
+
+      if (res.ok) {
+        alert('Login Successful!');
+       
+      } else {
+        alert('Incorrect email or password! Redirecting to Forgot Password page.');
+        router.push('/forgot-password');
+      }
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
