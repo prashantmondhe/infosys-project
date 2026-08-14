@@ -19,20 +19,18 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password }),
       });
 
-      // रिस्पॉन्स सुरक्षितपणे वाचण्यासाठी .text() वापरणे जेणेकरून JSON एरर येणार नाही
       const text = await res.text();
       const data = text ? JSON.parse(text) : {};
 
       if (res.ok) {
         alert('Login Successful!');
       } else {
-        alert(data.message || 'Incorrect email or password! Redirecting to Forgot Password page.');
+        alert(data.message || 'Incorrect email or password!');
         router.push('/forgot-password');
       }
     } catch (error) {
       console.error('Error:', error);
-      alert('An error occurred. Redirecting to Forgot Password page.');
-      router.push('/forgot-password');
+      alert('An error occurred.');
     }
   };
 
